@@ -7,5 +7,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^menu/$', views.menu, name='exercises_menu'),
+    url(r'^$', views.menu, name='exercises_menu'),
 )
