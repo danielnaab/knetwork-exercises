@@ -7,7 +7,8 @@ INSTALLED_APPS or use the included project configuration for testing purposes.
 Dependencies
 ------------
 This project has been built and tested on Python 2.7.1 and Django 1.3.1.
-It requires pyobjc (OS X) for screenshot generation.
+It requires pyobjc (OS X) for screenshot generation via a library version of
+the webkit2png tool (https://github.com/danielnaab/webkit2png).
 
     $ pip install -r requirements.txt
 
@@ -20,8 +21,6 @@ The test project configuration has dependencies on sqlite3.
 The import can be executed by using the `import_exercises` management command:
 
     $ ./manage.py import_exercises
-
-The sample menu navigation should now be accessible at http://localhost:8000
 
 Thumbnail Generation
 --------------------
@@ -38,3 +37,5 @@ Test Server
 To run the Django dev server:
 
     $ ./manage.py runserver
+
+The sample menu navigation should now be accessible at http://localhost:8000
