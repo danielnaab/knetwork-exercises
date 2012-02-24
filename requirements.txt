@@ -1,2 +1,4 @@
 django==1.3.1
 django-mptt
+pyobjc==2.2
+-e git+git@github.com:danielnaab/webkit2png.git#egg=webkit2png
