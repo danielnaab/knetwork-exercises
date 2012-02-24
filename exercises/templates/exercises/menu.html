@@ -1,0 +1,21 @@
+{% load mptt_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Khan Academy Exercises</title>
+    </head>
+    <body>
+        <ul>
+        {% recursetree nodes %}
+            {% if node.is_leaf_node %}
+                <li>{{node.display_name}}</li>
+            {% else %}
+                <li>{{node.display_name}}</li>
+                <ul>{{children}}</ul>
+            {% endif %}
+        {% endrecursetree %}
+        </ul>
+    </body>
+</html>
