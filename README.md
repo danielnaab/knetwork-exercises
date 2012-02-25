@@ -4,6 +4,9 @@ Imports exercises from the Khan Academy topic tree into a Django-ORM managed
 database table stored with django-mptt.  To use, add `exercises` to
 INSTALLED_APPS or use the included project configuration for testing purposes.
 
+The app provides a view which renders the exercise tree as a menu, where each
+exercise has a PNG preview.
+
 Dependencies
 ------------
 This project has been built and tested on Python 2.7.1 and Django 1.3.1.
