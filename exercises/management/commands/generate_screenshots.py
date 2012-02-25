@@ -1,3 +1,5 @@
+from subprocess import call
+
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
@@ -5,21 +7,38 @@ from exercises.models import KhanExerciseTreeNode
 
 POST_LOAD_JS = """
     $(document).ready(function() {
-        $("header, footer, #answer_area_wrap, #warning-bar, #extras, .exercise-badge").hide();
-        //$("problemarea").css('min-height', 'none');
+        $('header, footer, #answer_area_wrap, #warning-bar, #extras, .exercise-badge').hide();
+        $('*').css('background', 'transparent')
     });
 """
 
 def _generate_screenshots():
-    from webkit2png import create_pngs
-
     exercises = KhanExerciseTreeNode.objects.filter(live=True)
-    urls = [e.url for e in exercises if e.get_descendant_count() == 0]
-    options = {
-        'dir': settings.KHAN_EXERCISE_SCREENSHOT_DIR,
-        'js': POST_LOAD_JS
-    }
-    create_pngs(*urls, **options)
+    urls = [e.url for e in exercises if '#' not in e.url]
+
+    # This should work fine, but there's a little issue with the webkit2png
+    # with large lists of urls.  So we'll call the process instead, on 5 urls
+    # at a time.
+    #options = {
+    #    'dir': settings.KHAN_EXERCISE_SCREENSHOT_DIR,
+    #    'js': POST_LOAD_JS,
+    #    'transparent': True,
+    #    'fullsize': True,
+    #    'delay': 2
+    #}
+    #from webkit2png import create_pngs
+    #create_pngs(*urls, **options)
+
+    options = [
+        '--dir', settings.KHAN_EXERCISE_SCREENSHOT_DIR,
+        '--js', POST_LOAD_JS,
+        '--transparent',
+        '--fullsize',
+        '--delay', '2'
+    ]
+    for url_group in zip(*(iter(urls),)*5):
+        args = ['webkit2png'] + list(url_group) + options
+        call(args)
 
 class Command(BaseCommand):
     help = 'Generates PNG screenshots of each live exercise in the database.'
