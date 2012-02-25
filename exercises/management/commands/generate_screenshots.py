@@ -1,7 +1,7 @@
 from subprocess import call
 
-from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.core.management.base import BaseCommand
 
 from exercises.models import KhanExerciseTreeNode
 

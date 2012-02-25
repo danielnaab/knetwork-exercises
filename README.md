@@ -11,7 +11,8 @@ Dependencies
 ------------
 This project has been built and tested on Python 2.7.1 and Django 1.3.1.
 It requires pyobjc (OS X) for screenshot generation via a library version of
-the webkit2png tool (https://github.com/danielnaab/webkit2png).
+the webkit2png tool (https://github.com/danielnaab/webkit2png).  To trim the
+images, the Python Imaging Library is required.
 
     $ pip install -r requirements.txt
 
@@ -34,6 +35,10 @@ Thumbnails for each Khan exercise page may be generated with the
 
 The screenshots are placed in the app's static/images/exercise-screenshots
 directory.
+
+There is a separate command available to trim the images to a minimum size:
+
+    $ ./manage.py crop_screenshots
 
 Test Server
 -----------
