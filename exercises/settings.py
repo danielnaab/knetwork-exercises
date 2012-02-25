@@ -118,6 +118,7 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
     # 'django.contrib.admindocs',
+    'django_extensions',
     'mptt',
 
     'exercises',
@@ -145,3 +146,6 @@ LOGGING = {
         },
     }
 }
+
+KHAN_EXERCISE_SCREENSHOT_DIR = os.path.realpath(os.path.join(
+    PROJECT_ROOT, 'static/images/exercise-screenshots'))
