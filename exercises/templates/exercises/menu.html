@@ -12,28 +12,31 @@
     </head>
     <body>
     <ul id="nav">
-        <li>
-            {% recursetree nodes %}
-                <li>
-                    {% if node.url %}
-                        {% if node.live %}
-                        <a href="{{node.url}}">
-                            {{node.display_name}}
-                            <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
-                        </a>
-                        {% endif %}
-                    {% else %}
-                        <a href="#">{{node.display_name}}</a>
+        {% recursetree nodes %}
+            <li>
+                {% if node.url %}
+                    {% if node.live %}
+                    <a href="#" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}');">
+                        {{node.display_name}}
+                        <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
+                    </a>
                     {% endif %}
-                    {% if not node.is_leaf_node %}
-                        <ul class="children">
-                            {{children}}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endrecursetree %}
-        </li>
+                {% else %}
+                    <a href="#">{{node.display_name}}</a>
+                {% endif %}
+                {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{children}}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
     </ul>
+    <div id="exercise-preview">
+        <h1>Math Topic: <a id="topic">select a topic from the menu</a></h1>
+        <h4 style="display: none;">Example question:</h4>
+        <img id="preview-image" />
+    </div>
     <script>
         $(document).ready(function(){
             xOffset = -30;
@@ -44,7 +47,7 @@
                 var c = (this.t != "") ? "<br/>" + this.t : "";
                 var imgSrc = $(this).find('.preview').attr('alt');
                 if (imgSrc) {
-                    $("body").append("<p id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' />Exercise Preview</p>");
+                    $("body").append("<div id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' /></div>");
                     $("#preview")
                         .css("top",(e.pageY - xOffset) + "px")
                         .css("left",(e.pageX + yOffset) + "px")
@@ -61,6 +64,11 @@
                     .css("left",(e.pageX + yOffset) + "px");
             });
         });
+        function previewExercise(display_name, url, img_src) {
+            $('#topic').html(display_name).attr('href', url);
+            $('#preview-image').attr('src', img_src);
+            $('#exercise-preview>h4').show();
+        }
     </script>
     </body>
 </html>
