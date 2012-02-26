@@ -13,29 +13,25 @@
     <body>
     <ul id="nav">
         <li>
-            <a href="#">Exercise Menu Example</a>
-            <ul class="root">
-                {% full_tree_for_model exercises.KhanExerciseTreeNode as nodes %}
-                {% recursetree nodes %}
-                    <li>
-                        {% if node.url %}
-                            {% if node.live %}
-                            <a href="{{node.url}}">
-                                {{node.display_name}}
-                                <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
-                            </a>
-                            {% endif %}
-                        {% else %}
-                            <a href="#">{{node.display_name}}</a>
+            {% recursetree nodes %}
+                <li>
+                    {% if node.url %}
+                        {% if node.live %}
+                        <a href="{{node.url}}">
+                            {{node.display_name}}
+                            <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
+                        </a>
                         {% endif %}
-                        {% if not node.is_leaf_node %}
-                            <ul class="children">
-                                {{children}}
-                            </ul>
-                        {% endif %}
-                    </li>
-                {% endrecursetree %}
-            </ul>
+                    {% else %}
+                        <a href="#">{{node.display_name}}</a>
+                    {% endif %}
+                    {% if not node.is_leaf_node %}
+                        <ul class="children">
+                            {{children}}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endrecursetree %}
         </li>
     </ul>
     <script>
