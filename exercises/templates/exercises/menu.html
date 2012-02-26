@@ -5,17 +5,65 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Khan Academy Exercises</title>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+            type="text/javascript"></script>
+        <link href="{{STATIC_URL}}css/base.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <ul>
-        {% recursetree nodes %}
-            {% if node.is_leaf_node %}
-                <li>{{node.display_name}}</li>
-            {% else %}
-                <li>{{node.display_name}}</li>
-                <ul>{{children}}</ul>
-            {% endif %}
-        {% endrecursetree %}
-        </ul>
+    <ul id="nav">
+        <li>
+            <a href="#">Exercise Menu Example</a>
+            <ul class="root">
+                {% full_tree_for_model exercises.KhanExerciseTreeNode as nodes %}
+                {% recursetree nodes %}
+                    <li>
+                        {% if node.url and node.live %}
+                            <a href="{{node.url}}">
+                                {{node.display_name}}
+                                <img src="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" alt="{{node.display_name}}" class="preview" style="display: none" />
+                            </a>
+                        {% else %}
+                            <a href="#">{{node.display_name}}</a>
+                        {% endif %}
+                        {% if not node.is_leaf_node %}
+                            <ul class="children">
+                                {{children}}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            </ul>
+        </li>
+    </ul>
+    <script>
+        $(document).ready(function(){
+            xOffset = -30;
+            yOffset = -300;
+
+            $("li>a").hover(function(e){
+                this.title = "";
+                var c = (this.t != "") ? "<br/>" + this.t : "";
+                var imgSrc = $(this).find('.preview').attr('src');
+                var imgCaption = $(this).find('.preview').attr('alt');
+                if (imgSrc) {
+                    $("body").append("<p id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' />"+ imgCaption +"</p>");
+                    $("#preview")
+                        .css("top",(e.pageY - xOffset) + "px")
+                        .css("left",(e.pageX + yOffset) + "px")
+                        .fadeIn("fast");
+                }
+            },
+            function(){
+                this.title = this.t;
+                $("#preview").remove();
+            });
+            $("li>a").mousemove(function(e){
+                $("#preview")
+                    .css("top",(e.pageY - xOffset) + "px")
+                    .css("left",(e.pageX + yOffset) + "px");
+            });
+        });
+    </script>
     </body>
 </html>
