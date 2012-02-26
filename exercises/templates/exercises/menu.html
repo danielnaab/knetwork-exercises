@@ -21,7 +21,7 @@
                         {% if node.url and node.live %}
                             <a href="{{node.url}}">
                                 {{node.display_name}}
-                                <img src="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" alt="{{node.display_name}}" class="preview" style="display: none" />
+                                <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
                             </a>
                         {% else %}
                             <a href="#">{{node.display_name}}</a>
@@ -44,10 +44,9 @@
             $("li>a").hover(function(e){
                 this.title = "";
                 var c = (this.t != "") ? "<br/>" + this.t : "";
-                var imgSrc = $(this).find('.preview').attr('src');
-                var imgCaption = $(this).find('.preview').attr('alt');
+                var imgSrc = $(this).find('.preview').attr('alt');
                 if (imgSrc) {
-                    $("body").append("<p id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' />"+ imgCaption +"</p>");
+                    $("body").append("<p id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' />Exercise Preview</p>");
                     $("#preview")
                         .css("top",(e.pageY - xOffset) + "px")
                         .css("left",(e.pageX + yOffset) + "px")
