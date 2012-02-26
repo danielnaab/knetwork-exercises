@@ -18,11 +18,13 @@
                 {% full_tree_for_model exercises.KhanExerciseTreeNode as nodes %}
                 {% recursetree nodes %}
                     <li>
-                        {% if node.url and node.live %}
+                        {% if node.url %}
+                            {% if node.live %}
                             <a href="{{node.url}}">
                                 {{node.display_name}}
                                 <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
                             </a>
+                            {% endif %}
                         {% else %}
                             <a href="#">{{node.display_name}}</a>
                         {% endif %}
