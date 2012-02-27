@@ -53,11 +53,12 @@ def _import_old_list(exercises):
     uncategorized.move_to(KhanExerciseTreeNode.tree.get(khan_id='math'))
     for exercise in exercises:
         try:
-            node, created = KhanExerciseTreeNode.tree.get_or_create(
+            node, created = KhanExerciseTreeNode.tree.get(
                 khan_id=exercise['name'])
             node.live = exercise['live']
             node.url = exercise['ka_url']
-            node.move_to(uncategorized)
+            node.display_name = exercise['display_name']
+            node.save()
         except KhanExerciseTreeNode.DoesNotExist:
             node = KhanExerciseTreeNode(
                 khan_id=exercise['name'],
