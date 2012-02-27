@@ -33,9 +33,9 @@
         {% endrecursetree %}
     </ul>
     <div id="exercise-preview">
-        <h1>Math Topic: <a id="topic">select a topic from the menu</a></h1>
+        <h1>Math Topic: <a id="topic" target="_blank">select a topic from the menu</a></h1>
         <h4 style="display: none;">Example question:</h4>
-        <img id="preview-image" />
+        <a id="preview-image" href="" target="_blank"><img /></a>
     </div>
     <script>
         $(document).ready(function(){
@@ -66,7 +66,8 @@
         });
         function previewExercise(display_name, url, img_src) {
             $('#topic').html(display_name).attr('href', url);
-            $('#preview-image').attr('src', img_src);
+            $('#preview-image').attr('href', url);
+            $('#preview-image>img').attr('src', img_src);
             $('#exercise-preview>h4').show();
         }
     </script>
