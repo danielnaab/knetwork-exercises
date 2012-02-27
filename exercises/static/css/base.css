@@ -10,7 +10,7 @@ a {
     float: left;
     margin: 1em;
     padding: 7px 6px 0;
-    background: #7d7d7d url(img/gradient.png) repeat-x 0 -110px;
+    background: #7d7d7d repeat-x 0 -110px;
     line-height: 100%;
 
     border-radius: 2em;
@@ -49,7 +49,7 @@ a {
 
 /* main level link hover */
 #nav .current a, #nav li:hover > a {
-    background: white url(img/gradient.png) repeat-x 0 -40px;
+    background: white repeat-x 0 -40px;
     color: #444;
     border-top: solid 1px #f8f8f8;
 
@@ -70,7 +70,7 @@ a {
     -moz-box-shadow: none;
 }
 #nav ul a:hover {
-    background: #0078ff url(img/gradient.png) repeat-x 0 -100px !important;
+    background: #0078ff repeat-x 0 -100px !important;
     color: #fff !important;
 
     -webkit-border-radius: 0;
@@ -94,7 +94,7 @@ a {
     position: absolute;
     top: 0px;
     left: 200px;
-    background: #ddd url(img/gradient.png) repeat-x 0 0;
+    background: #ddd repeat-x 0 0;
     border: solid 1px #b4b4b4;
 
     -webkit-border-radius: 10px;

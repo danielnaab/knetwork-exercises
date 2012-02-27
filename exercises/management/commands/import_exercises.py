@@ -6,6 +6,7 @@ from django.utils import simplejson
 from exercises.models import KhanExerciseTreeNode
 
 API_URL = 'http://www.khanacademy.org/api/v1/topictree'
+API_URL_EXERCISES = 'http://www.khanacademy.org/api/v1/exercises'
 
 def _import_tree(tree_dict):
     if tree_dict['kind'] == 'Topic':
@@ -42,9 +43,39 @@ def _import_tree(tree_dict):
 
     return node, num_exercises
 
+def _import_old_list(exercises):
+    uncategorized, created = KhanExerciseTreeNode.tree.get_or_create(
+        khan_id='uncategorized',
+        display_name='Uncategorized Exercises',
+        live=True,
+        url=None
+    )
+    uncategorized.move_to(KhanExerciseTreeNode.tree.get(khan_id='math'))
+    for exercise in exercises:
+        try:
+            node, created = KhanExerciseTreeNode.tree.get_or_create(
+                khan_id=exercise['name'])
+            node.live = exercise['live']
+            node.url = exercise['ka_url']
+            node.move_to(uncategorized)
+        except KhanExerciseTreeNode.DoesNotExist:
+            node = KhanExerciseTreeNode(
+                khan_id=exercise['name'],
+                display_name=exercise['display_name'],
+                live=exercise['live'],
+                url=exercise['ka_url']
+            )
+            node.move_to(uncategorized)
+
 def _do_import():
+    # Import the topic tree
     response = urlopen(API_URL).read()
     _import_tree(simplejson.loads(response))
+
+    # Import the old exercise list
+    response = urlopen(API_URL_EXERCISES).read()
+    _import_old_list(simplejson.loads(response))
+
     KhanExerciseTreeNode.tree.rebuild()
 
 class Command(BaseCommand):

@@ -38,30 +38,32 @@
         <a id="preview-image" href="" target="_blank"><img /></a>
     </div>
     <script>
-        $(document).ready(function(){
-            xOffset = -30;
-            yOffset = -100;
+        $(document).ready(function() {
+            xOffset = 100;
+            yOffset = 30;
 
-            $("li>a").hover(function(e){
+            $("li>a").hover(function(e) {
                 this.title = "";
                 var c = (this.t != "") ? "<br/>" + this.t : "";
                 var imgSrc = $(this).find('.preview').attr('alt');
                 if (imgSrc) {
                     $("body").append("<div id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' /></div>");
                     $("#preview")
-                        .css("top",(e.pageY - xOffset) + "px")
-                        .css("left",(e.pageX + yOffset) + "px")
+                        .css("top",(e.pageY + yOffset) + "px")
+                        .css("left",(e.pageX - xOffset) + "px")
                         .fadeIn("fast");
                 }
             },
-            function(){
+            function() {
                 this.title = this.t;
                 $("#preview").remove();
             });
-            $("li>a").mousemove(function(e){
+            $("li>a").mousemove(function(e) {
+                var top = e.pageY + yOffset;
+                var left = e.pageX - xOffset;
                 $("#preview")
-                    .css("top",(e.pageY - xOffset) + "px")
-                    .css("left",(e.pageX + yOffset) + "px");
+                    .css("top", top + "px")
+                    .css("left", left + "px");
             });
         });
         function previewExercise(display_name, url, img_src) {
