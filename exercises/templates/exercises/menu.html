@@ -17,7 +17,7 @@
             <li>
                 {% if node.url %}
                     {% if node.live %}
-                    <a id="{{node.khan_id}}" name="{{node.display_name}}" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{node.filename}}">
+                    <a id="{{node.khan_id}}" name="{{node.display_name}}" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}');">
                         {{node.display_name}}
                     </a>
                     {% endif %}
@@ -32,8 +32,14 @@
             </li>
         {% endrecursetree %}
     </ul>
+    <div id="exercise-preview">
+        <h1>Math Topic: <a id="topic" target="_blank">select a topic from the menu</a></h1>
+        <h4 style="display: none;">Example question:</h4>
+        <a id="preview-image" href="" target="_blank"><img /></a>
+    </div>
     <script>
         function previewExercise(display_name, url, img_src) {
+            console.log('test');
             $('#topic').html(display_name).attr('href', url);
             $('#preview-image').attr('href', url);
             $('#preview-image>img').attr('src', img_src);
