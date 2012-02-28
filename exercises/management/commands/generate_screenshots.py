@@ -13,7 +13,7 @@ POST_LOAD_JS = """
 """
 
 def _generate_screenshots():
-    exercises = KhanExerciseTreeNode.objects.filter(live=True)
+    exercises = KhanExerciseTreeNode.objects.filter(live=True).exclude(url=None)
     urls = [e.url for e in exercises if '#' not in e.url]
 
     # This should work fine, but there's a little issue with the webkit2png
@@ -36,8 +36,8 @@ def _generate_screenshots():
         '--fullsize',
         '--delay', '2'
     ]
-    for url_group in zip(*(iter(urls),)*5):
-        args = ['webkit2png'] + list(url_group) + options
+    for url in urls:
+        args = ['webkit2png'] + [url] + options
         call(args)
 
 class Command(BaseCommand):

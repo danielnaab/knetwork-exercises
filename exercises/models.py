@@ -1,5 +1,6 @@
-from django.db import models
+import re
 
+from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 
 class KhanExerciseTreeNode(MPTTModel):
@@ -18,7 +19,9 @@ class KhanExerciseTreeNode(MPTTModel):
 
     @property
     def filename(self):
-        return 'wwwkhanacademyorgexercise%s-full-trimmed.png' % self.khan_id
+        return 'wwwkhanacademyorgexercise%s-full-trimmed.png' % (
+            re.sub('\W', '', self.khan_id)
+        )
 
     def __unicode__(self):
         return self.khan_id
