@@ -17,7 +17,7 @@
             <li>
                 {% if node.url %}
                     {% if node.live %}
-                    <a id="{{node.khan_id}}" name="{{node.display_name}}" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}');">
+                    <a id="{{node.khan_id}}" name="{{node.display_name}} Example Exercise" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}');">
                         {{node.display_name}}
                     </a>
                     {% endif %}
