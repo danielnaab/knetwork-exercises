@@ -6,8 +6,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Khan Academy Exercises</title>
         <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.3/jquery.min.js"
             type="text/javascript"></script>
+        <script src="{{STATIC_URL}}js/jtip.js" type="text/javascript"></script>
         <link href="{{STATIC_URL}}css/base.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -16,9 +17,8 @@
             <li>
                 {% if node.url %}
                     {% if node.live %}
-                    <a href="#" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}');">
+                    <a id="{{node.khan_id}}" name="{{node.display_name}}" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{node.filename}}">
                         {{node.display_name}}
-                        <img src="" alt="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" class="preview" style="display: none" />
                     </a>
                     {% endif %}
                 {% else %}
@@ -32,40 +32,7 @@
             </li>
         {% endrecursetree %}
     </ul>
-    <div id="exercise-preview">
-        <h1>Math Topic: <a id="topic" target="_blank">select a topic from the menu</a></h1>
-        <h4 style="display: none;">Example question:</h4>
-        <a id="preview-image" href="" target="_blank"><img /></a>
-    </div>
     <script>
-        $(document).ready(function() {
-            xOffset = 100;
-            yOffset = 30;
-
-            $("li>a").hover(function(e) {
-                this.title = "";
-                var c = (this.t != "") ? "<br/>" + this.t : "";
-                var imgSrc = $(this).find('.preview').attr('alt');
-                if (imgSrc) {
-                    $("body").append("<div id='preview'><img src='"+ imgSrc +"' alt='Sample Exercise' /></div>");
-                    $("#preview")
-                        .css("top",(e.pageY + yOffset) + "px")
-                        .css("left",(e.pageX - xOffset) + "px")
-                        .fadeIn("fast");
-                }
-            },
-            function() {
-                this.title = this.t;
-                $("#preview").remove();
-            });
-            $("li>a").mousemove(function(e) {
-                var top = e.pageY + yOffset;
-                var left = e.pageX - xOffset;
-                $("#preview")
-                    .css("top", top + "px")
-                    .css("left", left + "px");
-            });
-        });
         function previewExercise(display_name, url, img_src) {
             $('#topic').html(display_name).attr('href', url);
             $('#preview-image').attr('href', url);
