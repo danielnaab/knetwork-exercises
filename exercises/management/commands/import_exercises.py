@@ -15,11 +15,13 @@ def _import_tree(tree_dict):
         live = True
         url = None # make None because it's not an exercise
         num_exercises = 0
+        is_topic = True
     elif tree_dict['kind'] == 'Exercise':
         khan_id = tree_dict['name']
         display_name = tree_dict['display_name']
         live = tree_dict['live']
         url = tree_dict['ka_url']
+        is_topic = False
         num_exercises = 1
     else:
         return None, 0
@@ -28,6 +30,7 @@ def _import_tree(tree_dict):
     node.display_name = display_name
     node.live = live
     node.url = url
+    node.is_topic = is_topic
     node.save()
 
     if tree_dict.has_key('children'):
@@ -48,23 +51,27 @@ def _import_old_list(exercises):
         khan_id='uncategorized',
         display_name='Uncategorized Exercises',
         live=True,
-        url=None
+        url=None,
+        is_topic=True
     )
     uncategorized.move_to(KhanExerciseTreeNode.tree.get(khan_id='math'))
     for exercise in exercises:
+        print exercise['display_name']
         try:
             node = KhanExerciseTreeNode.tree.get(
                 khan_id=exercise['name'])
             node.live = exercise['live']
             node.url = exercise['ka_url']
             node.display_name = exercise['display_name']
+            node.is_topic = False
             node.save()
         except KhanExerciseTreeNode.DoesNotExist:
             node = KhanExerciseTreeNode(
                 khan_id=exercise['name'],
                 display_name=exercise['display_name'],
                 live=exercise['live'],
-                url=exercise['ka_url']
+                url=exercise['ka_url'],
+                is_topic=False
             )
             node.save()
             node.move_to(uncategorized)

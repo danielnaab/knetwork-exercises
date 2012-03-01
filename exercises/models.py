@@ -11,11 +11,12 @@ class KhanExerciseTreeNode(MPTTModel):
     display_name = models.CharField(max_length=255)
     live = models.BooleanField()
     url = models.URLField(null=True)
+    is_topic = models.BooleanField(default=False)
 
     @property
     def is_exercise(self):
         # This is a hack.  There should be a separate field for this...
-        return not '#' in self.url
+        return not self.is_topic
 
     @property
     def filename(self):

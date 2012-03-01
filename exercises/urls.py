@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.menu, name='exercises_menu'),
+    url(r'^edit_categories/$', views.edit_categories, name='edit_categories'),
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
