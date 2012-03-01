@@ -1,0 +1,21 @@
+{% load mptt_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Khan Academy Exercises - Edit Categories</title>
+        <link href="{{STATIC_URL}}css/base.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <form method="post" action=".">
+            {{ formset.management_form }}
+            <button type="submit" name="action" value="save">Save</button>
+            {% for form in formset.forms %}
+                <div><strong>{{form.instance.display_name}} - {{form.instance.khan_id}}:</strong></div>
+                {{form.as_p}}
+            {% endfor %}
+            <button type="submit" name="action" value="save">Save</button>
+        </form>
+    </body>
+</html>
