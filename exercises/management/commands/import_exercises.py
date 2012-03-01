@@ -35,7 +35,12 @@ def _import_tree(tree_dict):
             child, _num_exercises = _import_tree(item)
             if _num_exercises > 0:
                 num_exercises += _num_exercises
-                child.move_to(node)
+                try:
+                    parent, created = KhanExerciseTreeNode.tree.get_or_create(khan_id=khan_id)
+                    child.move_to(parent)
+                except Exception, e:
+				    print child.url
+				    print node.display_name
             elif child:
                 # if there are no exercises on this category, remove from
                 # database.
