@@ -26,19 +26,12 @@ The import can be executed by using the `import_exercises` management command:
 
     $ ./manage.py import_exercises
 
-Thumbnail Generation
---------------------
-Thumbnails for each Khan exercise page may be generated with the
-`generate_screenshots` management command.  OS X and pyobjc are required.
+Exercises Update
+----------------
+Instead of generating screenshots, now the exercises are loaded from the 
+khan-exercises Github repository. The command to pull the latest updates is
 
-    $ ./manage.py generate_screenshots
-
-The screenshots are placed in the app's static/images/exercise-screenshots
-directory.
-
-There is a separate command available to trim the images to a minimum size:
-
-    $ ./manage.py crop_screenshots
+		$ ./manage.py clone_khan_exercies
 
 Test Server
 -----------
