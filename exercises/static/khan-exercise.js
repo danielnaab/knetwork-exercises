@@ -2987,6 +2987,7 @@ var Khan = (function() {
 			* Get rid of Khan branding
 			*/
 			document.getElementById("top-header").style.display = "none";
+			document.getElementById("answer_area_wrap").style.display = "none";
 			document.getElementsByClassName("short")[0].style.display = "none";
 			document.getElementById("warning-bar").style.display = "none";
 			document.getElementById("extras").style.display = "none";
