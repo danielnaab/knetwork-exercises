@@ -6,10 +6,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Khan Academy Exercises</title>
         <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.3/jquery.min.js"
+            src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
             type="text/javascript"></script>
         <script src="{{STATIC_URL}}js/jtip.js" type="text/javascript"></script>
         <link href="{{STATIC_URL}}css/base.css" rel="stylesheet" type="text/css" />
+        <script src="{{STATIC_URL}}/khan-exercises/khan-exercise.js"></script>
     </head>
     <body>
     <ul id="nav">
@@ -17,7 +18,7 @@
             <li>
                 {% if node.url %}
                     {% if node.live %}
-                    <a id="{{node.khan_id}}" name="{{node.display_name}} Example Exercise" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}');">
+                    <a id="{{node.khan_id}}" name="{{node.display_name}} Example Exercise" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{node.khan_id}}');">
                         {{node.display_name}}
                     </a>
                     {% endif %}
@@ -32,18 +33,28 @@
             </li>
         {% endrecursetree %}
     </ul>
+
     <div id="exercise-preview">
         <h1>Math Topic: <a id="topic" target="_blank">select a topic from the menu</a></h1>
         <h4 style="display: none;">Example question:</h4>
-        <a id="preview-image" href="" target="_blank"><img /></a>
+        <!-- <a id="preview-image" href="" target="_blank"><img /></a> -->
+        <div id="exercise-div">
+            <iframe id="exercise-frame" onload="refresh_title();" frameborder="1" height="100%" width="630px"></iframe>
+        </div>
     </div>
+
     <script>
-        function previewExercise(display_name, url, img_src) {
-            console.log('test');
+        function refresh_title() {
+            $($('#exercise-frame')[0].contentWindow.document).find("*").css('background', 'transparent');
+            $('#exercise-preview>h4').html($($('#exercise-frame')[0].contentWindow.document).find("#current-exercise").html());
+        }
+
+        function previewExercise(display_name, url, name) {
+            console.log('test: ' + display_name + " for " + "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html" + " and " + name);
             $('#topic').html(display_name).attr('href', url);
-            $('#preview-image').attr('href', url);
-            $('#preview-image>img').attr('src', img_src);
             $('#exercise-preview>h4').show();
+            $('#exercise-frame')[0].src = "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html";
+            $($('#exercise-frame')[0].contentWindow.document).find("*").css('background', 'transparent');
         }
     </script>
     </body>

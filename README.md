@@ -33,12 +33,11 @@ Thumbnails for each Khan exercise page may be generated with the
 
     $ ./manage.py generate_screenshots
 
-The screenshots are placed in the app's static/images/exercise-screenshots
-directory.
+Exercises Update
+----------------
+To grab the upstream copies of the Khan exercises from the Github repository:
 
-There is a separate command available to trim the images to a minimum size:
-
-    $ ./manage.py crop_screenshots
+		$ ./manage.py clone_khan_exercises
 
 Test Server
 -----------

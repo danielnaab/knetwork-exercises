@@ -8,7 +8,7 @@ from exercises.models import KhanExerciseTreeNode
 POST_LOAD_JS = """
     $(document).ready(function() {
         $('header, footer, #answer_area_wrap, #warning-bar, #extras, .exercise-badge').hide();
-        $('*').css('background', 'transparent')
+        $('*').css('background', 'transparent');
     });
 """
 
