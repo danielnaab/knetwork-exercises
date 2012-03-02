@@ -50,10 +50,10 @@
         }
 
         function previewExercise(display_name, url, name) {
-            console.log('test: ' + display_name + " for " + "{{STATIC_URL}}khan-exercises/exercises-packed/" + name + ".html" + " and " + name);
+            console.log('test: ' + display_name + " for " + "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html" + " and " + name);
             $('#topic').html(display_name).attr('href', url);
             $('#exercise-preview>h4').show();
-            $('#exercise-frame')[0].src = "{{STATIC_URL}}khan-exercises/exercises-packed/" + name + ".html";
+            $('#exercise-frame')[0].src = "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html";
             $($('#exercise-frame')[0].contentWindow.document).find("*").css('background', 'transparent');
         }
     </script>

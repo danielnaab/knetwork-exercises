@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^utils/(?P<id>.+)', redirect_to, {'url': '/static/khan-exercises/utils/%(id)s'}),
     url(r'^khan-exercise.js(?P<id>.+)', redirect_to, {'url': '/static/khan-exercises/khan-exercise.js%(id)s'}),
     url(r'^jquery(?P<id>.+)', redirect_to, {'url': '/static/khan-exercises/jquery%(id)s'}),
-    url(r'^exercises-packed/(?P<id>.+)', redirect_to, {'url': '/static/khan-exercises/exercises-packed/%(id)s'}),
+    url(r'^exercises/(?P<id>.+)', redirect_to, {'url': '/static/khan-exercises/exercises/%(id)s'}),
     url(r'^build/(?P<id>.+)', redirect_to, {'url': '/static/khan-exercises/build/%(id)s'}),
 )
 
