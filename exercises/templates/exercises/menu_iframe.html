@@ -29,7 +29,7 @@
         <h4 style="display: none;">Example question:</h4>
         <!-- <a id="preview-image" href="" target="_blank"><img /></a> -->
         <div id="exercise-div">
-            <iframe id="exercise-frame" onload="refresh_title();" frameborder="1" height="100%" width="630px"></iframe>
+            <iframe id="exercise-frame" onload="refresh_title();" style="height: 100%; width: 70%; border:none;"></iframe>
         </div>
     </div>
 
@@ -40,7 +40,6 @@
         }
 
         function previewExercise(display_name, url, name) {
-            console.log('test: ' + display_name + " for " + "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html" + " and " + name);
             $('#topic').html(display_name).attr('href', url);
             $('#exercise-preview>h4').show();
             $('#exercise-frame')[0].src = "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html";
