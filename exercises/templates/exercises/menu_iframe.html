@@ -1,0 +1,50 @@
+{% extends 'exercises/base.html' %}
+
+{% load mptt_tags %}
+
+{% block content %}
+    <ul id="nav">
+        {% recursetree nodes %}
+            <li>
+                {% if node.url %}
+                    {% if node.live %}
+                    <a id="{{node.khan_id}}" name="{{node.display_name}} Example Exercise" class="jTip" href="{{STATIC_URL}}images/exercise-screenshots/{{node.filename}}" onclick="previewExercise('{{node.display_name}}', '{{node.url}}', '{{node.khan_id}}');">
+                        {{node.display_name}}
+                    </a>
+                    {% endif %}
+                {% else %}
+                    <a href="#">{{node.display_name}}</a>
+                {% endif %}
+                {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{children}}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+
+    <div id="exercise-preview">
+        <h1>Math Topic: <a id="topic" target="_blank">select a topic from the menu</a></h1>
+        <h4 style="display: none;">Example question:</h4>
+        <!-- <a id="preview-image" href="" target="_blank"><img /></a> -->
+        <div id="exercise-div">
+            <iframe id="exercise-frame" onload="refresh_title();" frameborder="1" height="100%" width="630px"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function refresh_title() {
+            $($('#exercise-frame')[0].contentWindow.document).find("*").css('background', 'transparent');
+            $('#exercise-preview>h4').html($($('#exercise-frame')[0].contentWindow.document).find("#current-exercise").html());
+        }
+
+        function previewExercise(display_name, url, name) {
+            console.log('test: ' + display_name + " for " + "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html" + " and " + name);
+            $('#topic').html(display_name).attr('href', url);
+            $('#exercise-preview>h4').show();
+            $('#exercise-frame')[0].src = "{{STATIC_URL}}khan-exercises/exercises/" + name + ".html";
+            $($('#exercise-frame')[0].contentWindow.document).find("*").css('background', 'transparent');
+        }
+    </script>
+{% endblock %}

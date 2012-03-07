@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
@@ -11,6 +12,7 @@ def menu(request, template_name='exercises/menu.html'):
         'nodes': nodes
     }))
 
+@login_required
 def edit_categories(request, template_name='exercises/edit_categories.html'):
     from django.forms.models import modelformset_factory
 

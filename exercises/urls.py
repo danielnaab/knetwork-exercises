@@ -9,6 +9,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.menu, name='exercises_menu'),
+    url(r'^iframe/$', views.menu, {
+        'template_name': 'exercises/menu_iframe.html',
+    }, name='exercises_menu_iframe'),
     url(r'^edit_categories/$', views.edit_categories, name='edit_categories'),
 )
 
