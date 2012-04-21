@@ -24,5 +24,17 @@ class KhanExerciseTreeNode(MPTTModel):
             re.sub('\W', '', self.khan_id)
         )
 
+    @property
+    def filename_full(self):
+        return 'wwwkhanacademyorgexercise%s-full.png' % (
+            re.sub('\W', '', self.khan_id)
+        )
+
+    @property
+    def readable_filename(self):
+        return '{}_{}.png'.format(
+            self.parent.display_name.replace(' ', '_'),
+            self.display_name.replace(' ', '_'))
+
     def __unicode__(self):
         return self.khan_id

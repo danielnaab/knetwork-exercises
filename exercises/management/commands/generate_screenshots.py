@@ -1,3 +1,4 @@
+import os
 from subprocess import call
 
 from django.conf import settings
@@ -14,7 +15,8 @@ POST_LOAD_JS = """
 
 def _generate_screenshots():
     exercises = KhanExerciseTreeNode.objects.filter(live=True).exclude(url=None)
-    urls = [e.url for e in exercises if '#' not in e.url]
+    urls = [(e.url, e.filename_full, e.readable_filename
+        ) for e in exercises if '#' not in e.url]
 
     # This should work fine, but there's a little issue with the webkit2png
     # with large lists of urls.  So we'll call the process instead, on 5 urls
@@ -36,9 +38,13 @@ def _generate_screenshots():
         '--fullsize',
         '--delay', '2'
     ]
-    for url in urls:
+    for url, filename, readable_filename in urls:
         args = ['webkit2png'] + [url] + options
         call(args)
+        os.rename(
+            os.path.join(settings.KHAN_EXERCISE_SCREENSHOT_DIR, filename),
+            os.path.join(settings.KHAN_EXERCISE_SCREENSHOT_DIR, readable_filename)
+        )
 
 class Command(BaseCommand):
     help = 'Generates PNG screenshots of each live exercise in the database.'
